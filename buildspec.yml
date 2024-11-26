@@ -1,0 +1,19 @@
+version: 0.2
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region ap-southeast-2 | docker login --username AWS --password-stdin <your_account_id>.dkr.ecr.ap-southeast-2.amazonaws.com
+  build:
+    commands:
+      - echo Building Docker images...
+      - docker build -t app ./app
+      - docker build -t db ./db
+      - echo Tagging and pushing Docker images...
+      - docker tag app:latest <your_account_id>.dkr.ecr.ap-southeast-2.amazonaws.com/app:latest
+      - docker tag db:latest <your_account_id>.dkr.ecr.ap-southeast-2.amazonaws.com/db:latest
+      - docker push <your_account_id>.dkr.ecr.ap-southeast-2.amazonaws.com/app:latest
+      - docker push <your_account_id>.dkr.ecr.ap-southeast-2.amazonaws.com/db:latest
+artifacts:
+  files:
+    - task-definition.json

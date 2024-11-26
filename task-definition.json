@@ -1,0 +1,38 @@
+{
+    "family": "multi-container-task",
+    "containerDefinitions": [
+      {
+        "name": "app",
+        "image": "<app_image_placeholder>",
+        "memory": 512,
+        "cpu": 256,
+        "portMappings": [
+          {
+            "containerPort": 8080,
+            "hostPort": 8080
+          }
+        ]
+      },
+      {
+        "name": "db",
+        "image": "<db_image_placeholder>",
+        "memory": 512,
+        "cpu": 256,
+        "environment": [
+          {
+            "name": "POSTGRES_USER",
+            "value": "user"
+          },
+          {
+            "name": "POSTGRES_PASSWORD",
+            "value": "password"
+          },
+          {
+            "name": "POSTGRES_DB",
+            "value": "mydatabase"
+          }
+        ]
+      }
+    ]
+  }
+  
